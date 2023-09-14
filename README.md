@@ -43,6 +43,12 @@ yarn start
 ```
     
 <p>O projeto estará disponível no seu navegador em <code>http://localhost:3000</code>. Você poderá ver a Pokedex em ação.</p>
+<h2>Projeto em Execução</h2>
+
+<p>Você também pode conferir o projeto em execução no Netlify acessando o seguinte link:</p>
+
+<a href="https://jade-cannoli-f58e7b.netlify.app" target="_blank">Pokedex</a>
+
     
 <h2>Pendência</h2>
     
