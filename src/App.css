@@ -1,5 +1,11 @@
-.App {
+@font-face {
+  font-family: 'barcadebrawl';
+  src: url('../public/assets/font/BarcadeBrawl.ttf');
+}
+
+.app {
   text-align: center;
+
 }
 
 .App-logo {
@@ -7,6 +13,13 @@
   pointer-events: none;
 }
 
+.MuiCardMedia-img img{
+  height: 100px;
+  width: 100px;
+}
+.MuiTypography-subtitle2{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -14,7 +27,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #080a0c;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
