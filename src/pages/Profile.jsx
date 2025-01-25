@@ -1,60 +1,97 @@
-import { Chip, Container, Divider, Paper, Typography } from "@mui/material";
-import { Box } from "@mui/system";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Chip, Container, Divider, Paper, Typography, Box } from "@mui/material";
 import Navbar from "../components/Navbar";
 import PokemonTable from "../components/PokemonTable";
-import { ThemeProvider } from '@emotion/react'
+import { ThemeProvider } from "@emotion/react";
 import { theme } from "../components/Theme";
 
-
 export const Profile = ({ pokemonData }) => {
-  const { name, sprites, moves } = pokemonData || {};
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!pokemonData) {
-      navigate("/");
-    }
-  },);
+    if (!pokemonData) navigate("/");
+  }, [pokemonData, navigate]);
 
-  if (!pokemonData) {
-    return null;
-  }
+  if (!pokemonData) return null;
+
+  const { name, sprites, moves } = pokemonData;
 
   return (
     <ThemeProvider theme={theme}>
-      <Navbar hideSearch />
+      <Navbar hideSearch hideShiny />
       <Container maxWidth="md">
-        <Paper elevation={3}>
-          <Box display="flex" flexDirection="column" alignItems="center" p={5}>
-            <Typography variant="h4">{name}</Typography>
+        <Paper elevation={3} sx={{ p: 5, mt: 3, borderRadius: 4 }}>
+          <Box display="flex" flexDirection="column" alignItems="center" gap={3}>
+            <Typography variant="h4" textTransform="capitalize" color="primary">
+              {name}
+            </Typography>
             <Box
               display="flex"
+              flexDirection={{ xs: "column", md: "row" }}
               alignItems="center"
+              gap={3}
               width="100%"
-              marginBottom="15px"
-              sx={{
-                flexDirection: {
-                  xs: "column",
-                  md: "row",
-                },
-              }}
             >
-              <Box component="img" src={sprites.front_default} width="50%" height="100%" />
+              <Box
+                component="img"
+                src={sprites.front_default}
+                alt={`${name} default`}
+                sx={{
+                  width: { xs: "70%", md: "50%" },
+                  maxHeight: "300px",
+                  objectFit: "contain",
+                  borderRadius: 2,
+                  boxShadow: 2,
+                }}
+              />
               <PokemonTable pokemonData={pokemonData} />
             </Box>
-            <Box width="100%">
-              <Divider>Variações</Divider>
-              <Box display="flex" justifyContent="space-between">
-                <Box component="img" src={sprites.front_female} width="25%" height="25%" />
-                <Box component="img" src={sprites.front_shiny} width="25%" height="25%" />
-                <Box component="img" src={sprites.front_shiny_female} width="25%" height="25%" />
+
+            {/* Variações de Sprites */}
+            <Box width="100%" mt={3}>
+              <Divider textAlign="left" sx={{ mb: 2 }}>
+                Variações
+              </Divider>
+              <Box display="flex" justifyContent="space-around" gap={2} flexWrap="wrap">
+                {[
+                  { src: sprites.front_female, alt: "Female" },
+                  { src: sprites.front_shiny, alt: "Shiny" },
+                  { src: sprites.front_shiny_female, alt: "Shiny Female" },
+                ].map(
+                  (sprite, index) =>
+                    sprite.src && (
+                      <Box
+                        key={index}
+                        component="img"
+                        src={sprite.src}
+                        alt={`${name} ${sprite.alt}`}
+                        sx={{
+                          width: { xs: "30%", sm: "20%" },
+                          height: "auto",
+                          objectFit: "contain",
+                          borderRadius: 2,
+                          boxShadow: 1,
+                        }}
+                      />
+                    )
+                )}
               </Box>
-              <Divider>Ataques</Divider>
-              <Box textAlign="center" marginTop="15px">
-                {moves.map((moveData, key) => (
-                  <Chip key={key} sx={{ m: "5px" }} label={moveData.move.name} />
+            </Box>
+
+            {/* Movimentos */}
+            <Box width="100%" mt={3}>
+              <Divider textAlign="left" sx={{ mb: 2 }}>
+                Ataques
+              </Divider>
+              <Box textAlign="center">
+                {moves.map((moveData, index) => (
+                  <Chip
+                    key={index}
+                    label={moveData.move.name}
+                    sx={{ m: 0.5, textTransform: "capitalize" }}
+                    color="primary"
+                  />
                 ))}
               </Box>
             </Box>
